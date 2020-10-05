@@ -28,8 +28,15 @@ public class EmailGenerator {
     }
 
     public String getGeneratedPassword() {
-        String password = new Random().ints(10, 33, 122).mapToObj(i ->
+        String symbols = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        symbols += symbols.toUpperCase() + numbers;
+       /* String password = new Random().ints(12, 97, 122).mapToObj(i ->
                 String.valueOf((char)i)).collect(Collectors.joining());
+        String str = new Random().ints(password);*/
+        String password = new Random().ints(10, 0, symbols.length()).mapToObj(symbols::charAt)
+                .map(Object::toString)
+                .collect(Collectors.joining());
         return password;
     }
 }
