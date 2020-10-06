@@ -16,7 +16,7 @@ public class StudentInfoRepository {
     public void insertStudentInfo(StudentInfo studentInfo) {
         entityManager.createNativeQuery("INSERT IGNORE INTO students (id, name, email) VALUES(?,?,?)")
                 .setParameter(1, studentInfo.getId())
-                .setParameter(2, studentInfo.getName())
+                .setParameter(2, studentInfo.getNameEN())
                 .setParameter(3, studentInfo.getEmail())
                 .executeUpdate();
     }

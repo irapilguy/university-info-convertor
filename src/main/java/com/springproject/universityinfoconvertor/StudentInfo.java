@@ -13,12 +13,14 @@ public class StudentInfo {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private String id;
-    private String name;
+    private String nameUKR;
+    private String nameEN;
     private String email;
     private String password;
 
-    public StudentInfo(String name, String email, String password) {
-        this.name = name;
+    public StudentInfo(String nameUKR, String nameEN, String email, String password) {
+        this.nameUKR = nameUKR;
+        this.nameEN = nameEN;
         this.email = email;
         this.password = password;
     }
@@ -26,12 +28,12 @@ public class StudentInfo {
     public StudentInfo() {
     }
 
-    public String getName() {
-        return name;
+    public String getNameUKR() {
+        return nameUKR;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getNameEN() {
+        return nameEN;
     }
 
     public String getEmail() {

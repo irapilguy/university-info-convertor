@@ -19,7 +19,7 @@ public class UniversityInfoConvertorApplication {
         return args -> {
 
             InfoProcessor infoProcessor = applicationContext.getBean("infoProcessor", InfoProcessor.class);
-            infoProcessor.getStudentInfoList().forEach(studentInfo -> System.out.println(studentInfo.getName() + " " + studentInfo.getEmail()));
+            infoProcessor.getStudentInfoList().forEach(studentInfo -> System.out.println(studentInfo.getNameEN() + " " + studentInfo.getEmail()));
         };
     }
 }

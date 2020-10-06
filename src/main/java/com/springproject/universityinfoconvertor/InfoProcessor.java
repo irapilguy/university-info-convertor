@@ -12,6 +12,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class InfoProcessor {
+
+    private final String csvHeader = "First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Password Hash Function [UPLOAD ONLY],Org Unit Path [Required],New Primary Email [UPLOAD ONLY],Recovery Email,Home Secondary Email,Work Secondary Email,Recovery Phone [MUST BE IN THE E.164 FORMAT],Work Phone,Home Phone,Mobile Phone,Work Address,Home Address,Employee ID,Employee Type,Employee Title,Manager Email,Department,Cost Center,Building ID,Floor Name,Floor Section,Change Password at Next Sign-In,New Status [UPLOAD ONLY]\n";
+    private final String adminMail = "kick.maks545@icloud.com";
+    private final String adminNumber = "+38095111844";
+    private final String orgUnitPath = "/";
+    private final String changePasswordAtNextSignIn = "0";
+
+
     private List<StudentInfo> studentInfoList;
     private File csvFile;
 
@@ -49,7 +57,7 @@ public class InfoProcessor {
                 String name = transliterator.getTranslatedString(row);
                 String email = checkEmailUniqueness(emailGenerator.getGeneratedEmail(name));
                 String password = emailGenerator.getGeneratedPassword();
-                studentInfoList.add(new StudentInfo(name, email, password));
+                studentInfoList.add(new StudentInfo(row, name, email, password));
             }
             csvReader.close();
         } catch (IOException e) {
@@ -62,8 +70,12 @@ public class InfoProcessor {
         try (PrintWriter writer = new PrintWriter(csvFile)) {
 
             String line = new String();
+            line += csvHeader;
             for (StudentInfo studentInfo : studentInfoList) {
-                line += studentInfo.getName() + "," + studentInfo.getEmail() + "," + studentInfo.getPassword() + "\n";
+                String[] fullName = studentInfo.getNameUKR().split(" ");
+                String firstName = fullName[1] + (fullName.length == 3 ? " " + fullName[2] : "");
+                line += firstName + "," +fullName[0] + "," + studentInfo.getEmail() + "," + studentInfo.getPassword() + ",," +
+                        orgUnitPath + ",," + adminMail + ",,,,," + adminNumber + ",,,,,,,,,,,,," + changePasswordAtNextSignIn + ",\n";
             }
             writer.write(line);
         } catch (FileNotFoundException e) {
