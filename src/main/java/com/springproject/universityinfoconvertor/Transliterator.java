@@ -9,12 +9,12 @@ public class Transliterator {
     public String getTranslatedString(String wordToConvert) {
         String result = "";
         char prevChar = 'a';
-        for (char ch : wordToConvert.toCharArray()) {
+        for (char symbol : wordToConvert.toCharArray()) {
             String convertedSymbol = "";
-            boolean isUpperCase = Character.isUpperCase(ch);
-            ch = Character.toLowerCase(ch);
+            boolean isUpperCase = Character.isUpperCase(symbol);
+            symbol = Character.toLowerCase(symbol);
 
-            switch(ch){
+            switch(symbol){
                 case 'а': convertedSymbol = "a"; break;
                 case 'б': convertedSymbol = "b"; break;
                 case 'в': convertedSymbol = "v"; break;
@@ -47,13 +47,15 @@ public class Transliterator {
                 case 'й': convertedSymbol = isUpperCase ? "y" : "i"; break;
                 case 'ю': convertedSymbol = isUpperCase ? "yu" : "iu"; break;
                 case 'я': convertedSymbol = isUpperCase ? "ya" : "ia"; break;
-                case ' ': convertedSymbol = " ";
+                case 'ь': break;
+                case '’': break;
+                default: convertedSymbol = Character.toString(symbol);
             }
 
-            if(ch == 'г' && Character.toLowerCase(prevChar) == 'з'){
+            if(symbol == 'г' && Character.toLowerCase(prevChar) == 'з'){
                 convertedSymbol = "gh";
             }
-            prevChar = ch;
+            prevChar = symbol;
 
             if(isUpperCase) {
                 convertedSymbol = Character.toUpperCase(convertedSymbol.charAt(0)) +convertedSymbol.substring(1);

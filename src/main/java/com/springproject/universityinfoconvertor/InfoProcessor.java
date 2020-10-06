@@ -72,9 +72,8 @@ public class InfoProcessor {
             String line = new String();
             line += csvHeader;
             for (StudentInfo studentInfo : studentInfoList) {
-                String[] fullName = studentInfo.getNameUKR().split(" ");
-                String firstName = fullName[1] + (fullName.length == 3 ? " " + fullName[2] : "");
-                line += firstName + "," +fullName[0] + "," + studentInfo.getEmail() + "," + studentInfo.getPassword() + ",," +
+                String[] fullName = studentInfo.getNameUKR().split(" ", 2);
+                line += fullName[1] + "," +fullName[0] + "," + studentInfo.getEmail() + "," + studentInfo.getPassword() + ",," +
                         orgUnitPath + ",," + adminMail + ",,,,," + adminNumber + ",,,,,,,,,,,,," + changePasswordAtNextSignIn + ",\n";
             }
             writer.write(line);
