@@ -17,12 +17,18 @@ public class StudentInfo {
     private String nameEN;
     private String email;
     private String password;
+    private String group;
 
-    public StudentInfo(String nameUKR, String nameEN, String email, String password) {
+    public String getGroup() {
+        return group;
+    }
+
+    public StudentInfo(String nameUKR, String nameEN, String email, String password, String group) {
         this.nameUKR = nameUKR;
         this.nameEN = nameEN;
         this.email = email;
         this.password = password;
+        this.group = group;
     }
 
     public StudentInfo() {

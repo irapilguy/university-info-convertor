@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class InfoProcessor {
 
-    private final String csvHeader = "First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Password Hash Function [UPLOAD ONLY],Org Unit Path [Required],New Primary Email [UPLOAD ONLY],Recovery Email,Home Secondary Email,Work Secondary Email,Recovery Phone [MUST BE IN THE E.164 FORMAT],Work Phone,Home Phone,Mobile Phone,Work Address,Home Address,Employee ID,Employee Type,Employee Title,Manager Email,Department,Cost Center,Building ID,Floor Name,Floor Section,Change Password at Next Sign-In,New Status [UPLOAD ONLY]\n";
+    private final String csvHeader = "First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Password Hash Function [UPLOAD ONLY],Org Unit Path [Required],New Primary Email [UPLOAD ONLY],Recovery Email,Home Secondary Email,Work Secondary Email,Recovery Phone [MUST BE IN THE E.164 FORMAT],Work Phone,Home Phone,Mobile Phone,Work Address,Home Address,Employee ID,Employee Type,Employee Title,Manager Email,Department,Cost Center,Building ID,Floor Name,Floor Section,Change Password at Next Sign-In,New Status [UPLOAD ONLY],Group\n";
     private final String adminMail = "kick.maks545@icloud.com";
     private final String adminNumber = "+38095111844";
     private final String orgUnitPath = "/";
@@ -54,10 +54,12 @@ public class InfoProcessor {
 
             String row = "";
             while ((row = csvReader.readLine()) != null) {
-                String name = transliterator.getTranslatedString(row);
+                String[] studentInfo = row.split(",");
+                String name = transliterator.getTranslatedString(studentInfo[0]);
                 String email = checkEmailUniqueness(emailGenerator.getGeneratedEmail(name));
                 String password = emailGenerator.getGeneratedPassword();
-                studentInfoList.add(new StudentInfo(row, name, email, password));
+                String group = studentInfo[1];
+                studentInfoList.add(new StudentInfo(studentInfo[0], name, email, password, group));
             }
             csvReader.close();
         } catch (IOException e) {
@@ -73,8 +75,10 @@ public class InfoProcessor {
             line += csvHeader;
             for (StudentInfo studentInfo : studentInfoList) {
                 String[] fullName = studentInfo.getNameUKR().split(" ", 2);
-                line += fullName[1] + "," +fullName[0] + "," + studentInfo.getEmail() + "," + studentInfo.getPassword() + ",," +
-                        orgUnitPath + ",," + adminMail + ",,,,," + adminNumber + ",,,,,,,,,,,,," + changePasswordAtNextSignIn + ",\n";
+                line += fullName[1] + "," +fullName[0] + "," + studentInfo.getEmail() + "," +
+                        studentInfo.getPassword() + ",," + orgUnitPath + ",," + adminMail +
+                        ",,,,," + adminNumber + ",,,,,,,,,,,,," + changePasswordAtNextSignIn +
+                        "," + studentInfo.getGroup() + "\n";
             }
             writer.write(line);
         } catch (FileNotFoundException e) {

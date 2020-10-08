@@ -47,9 +47,9 @@ public class Transliterator {
                 case 'й': convertedSymbol = isUpperCase ? "y" : "i"; break;
                 case 'ю': convertedSymbol = isUpperCase ? "yu" : "iu"; break;
                 case 'я': convertedSymbol = isUpperCase ? "ya" : "ia"; break;
-                case 'ь': break;
-                case '’': break;
-                default: convertedSymbol = Character.toString(symbol);
+                case ' ': convertedSymbol = " ";break;
+                case '-': convertedSymbol = "-";break;
+                default: break;
             }
 
             if(symbol == 'г' && Character.toLowerCase(prevChar) == 'з'){
