@@ -78,7 +78,7 @@ public class InfoProcessor {
                 line += fullName[1] + "," +fullName[0] + "," + studentInfo.getEmail() + "," +
                         studentInfo.getPassword() + ",," + orgUnitPath + ",," + adminMail +
                         ",,,,," + adminNumber + ",,,,,,,,,,,,," + changePasswordAtNextSignIn +
-                        "," + studentInfo.getGroup() + "\n";
+                        ",," + studentInfo.getGroup() + "\n";
             }
             writer.write(line);
         } catch (FileNotFoundException e) {
